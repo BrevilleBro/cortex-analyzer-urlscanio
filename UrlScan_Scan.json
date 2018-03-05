@@ -1,0 +1,16 @@
+{
+    "name": "UrlScan_Scan",
+    "version": "1.0",
+    "author": "UNIT777",
+    "url": "https://urlscan.io/about-api/",
+    "license": "AGPL-V3",
+    "description": "Analyses websites and the resources they request. Much like the Inspector of your browser, urlscan.io will let you take a look at the individual resources that are requested when a site is loaded.",
+    "dataTypeList": ["domain", "url"],
+    "baseConfig": "UrlScan",
+    "config": {
+        "check_tlp": true,
+        "max_tlp": 1,
+        "service": "scan"
+    },
+    "command": "UrlscanIO/urlscan.py"
+}
