@@ -1,0 +1,142 @@
+<style>
+td {
+    word-wrap:break-word;
+}
+</style>
+<div>
+    <div class="panel panel-danger" ng-if="!success">
+        <div class="panel-heading">
+             <strong>{{(artifact.data || artifact.attachment.name)}}</strong>
+        </div>
+        <div class="panel-body">
+            An error has occurred with UrlScan.IO
+        </div>
+    </div>
+    <div class="panel panel-danger" ng-if="content==='{}'">
+        <div class="panel-heading">
+             Running
+        </div>
+        <div class="panel-body">
+            UrlScan is currently running
+        </div>
+    </div>
+        <div ng-if="success">
+        <div class="panel panel-info">
+            <div class="panel-heading"><strong>Summary</strong></div>
+            <div class="panel-body">
+                <dl class="dl-horizontal">
+                    <dt>Report URL:</dt>
+                    <dd><a href="{{content.UrlScan.urlscan_response.task.reportURL}}" target="_blank" ref="noopener norel">Report</a></dd>
+                    <dt>Scanned URL:</dt>
+                    <dd>{{content.UrlScan.urlscan_response.task.url}}</dd>
+                    <dt style="text-transform: capitalize;" ng-repeat-start="(key, value) in content.UrlScan.urlscan_response.page">{{key}}:</dt>
+                    <dd ng-repeat-end>{{value}}</dd>
+                    <dt>Malicious:</dt>
+                    <dd>
+                        <span ng-if="content.UrlScan.urlscan_response.malicious > 0" class="label label-danger">Malicious</span>
+                        <span ng-if="content.UrlScan.urlscan_response.malicious === 0" class="label label-success">Safe</span>
+                    </dd>
+                    <dt>IP addresses contacted:</dt>
+                    <dd>
+                        <ul>
+                            <li ng-repeat="ip in content.UrlScan.urlscan_response.ips">
+                                {{ip}}
+                            </li>
+                        </ul>
+                    </dd>
+                    <dt>Links:</dt>
+                    <dd>
+                        <ul>
+                            <li ng-repeat="domain in content.UrlScan.urlscan_response.linkDomains">
+                                {{domain}}
+                            </li>
+                        </ul>
+                    </dd>
+                    <dt>URLs Requested:</dt>
+                    <dd>
+                        <ul>
+                            <li ng-repeat="url in content.UrlScan.urlscan_response.urls">
+                                {{url}}
+                            </li>
+                        </ul>
+                    </dd>
+                    <dt>Countries Contacted:</dt>
+                    <dd>
+                        <ul>
+                            <li ng-repeat="country in content.UrlScan.urlscan_response.countries">
+                                {{country}}
+                            </li>
+                        </ul>
+                    </dd>
+                </dl>
+                 <dl class="dl-horizontal">
+                <dt>Full certificate data</dt>
+                <dd>
+                    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapse-certdata" aria-expanded="false" aria-controls="collapse-certdata">
+                        Show/hide
+                    </button>
+                    <br />
+                    <div class="collapse" id="collapse-certdata">
+                        <div class="card card-body">
+                            <pre style="overflow-x:scroll;">{{content.UrlScan.urlscan_response.certificates | json}}</pre>
+                            <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapse-certdata" aria-expanded="false" aria-controls="collapse-certdata">
+                                Show/hide
+                              </button>
+                        </div>
+                    </div>
+                </dd>
+            </tr>
+        </div>
+            </div>
+        </div>
+    </div>
+    <div class="panel panel-info" ng-if="success">
+        <div class="panel-heading">
+             <strong>{{(artifact.data || artifact.attachment.name)}} screenshot</strong>
+        </div>
+        <div class="panel-body">
+            <img class="img-responsive larger" ng-src="data:image/png;base64,{{content.UrlScan.urlscan_screenshot}}" />
+        </div>
+    </div>
+
+    <div ng-if="success">
+        <div class="panel panel-info">
+            <div class="panel-heading"><strong>Request Chain</strong></div>
+            <div class="panel-body">
+                <dl class="dl-horizontal">
+                    <table class="table table-hover" style="width: 100%;table-layout: fixed;">
+                    <thead>
+                        <th>Method</th>
+                        <th>Status</th>
+                        <th>Resource</th>
+                        <th>Type</th>
+                        <th>IP:Port</th>
+                        <th>ASN Name</th>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="request in content.UrlScan.urlscan_response.request_response_chain">
+                            <td>{{request.method}}</td>
+                            <td>{{request.response_status}}</td>
+                            <td>
+                            {{request.request_url}}
+                            <small ng-if="request.redirects.length > 0">
+                            <b style="color: orange; font-weight: bold;">Redirect Chain</p></b>
+                                <ul style="margin-top:-1em;">
+                                    <li ng-repeat="redirect in request.redirects">
+                                        {{redirect}}
+                                        <span ng-if="$index !== (request.redirects.length-1)" style="color: orange;" class="glyphicon glyphicon-share-alt"></span>
+                                    </li>
+                                </ul>
+                            </small>
+                            </td>
+                            <td>{{request.mime_type}}</td>
+                            <td>{{request.response_IP_PORT}}</td>
+                            <td>{{request.ip_whois_name}}</td>
+                        </tr>
+                    <tbody>
+                    </table>
+                </dl>
+            </div>
+        </div>
+    </div>
+</div>
