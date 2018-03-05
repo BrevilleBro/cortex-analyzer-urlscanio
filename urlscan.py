@@ -144,7 +144,7 @@ class UrlscanAnalyzer(Analyzer):
 
 
     def run(self):
-        if self.service == 'get':
+        if self.service == 'scan':
             if self.data_type == 'url' or self.data_type == "domain":
                 data = self.getParam('data', None, 'Data is missing')
                 r = self.scan_url(data)
