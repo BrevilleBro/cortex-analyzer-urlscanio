@@ -45,9 +45,9 @@ class UrlscanAnalyzer(Analyzer):
         data = '{"url": "%s"}' % url
         response = requests.post('https://urlscan.io/api/v1/scan/', headers=headers, data=data)
         #r = response.content.decode("utf-8")
-        uuid = response.json()["uuid"]
 
         if response.status_code == 200:
+            uuid = response.json()["uuid"]
             self.grab_report(uuid)
         elif response.status_code == 429:
             time.sleep(2)
