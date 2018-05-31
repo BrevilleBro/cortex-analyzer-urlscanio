@@ -12,5 +12,18 @@
         "max_tlp": 1,
         "service": "scan"
     },
+    "configurationItems": [{
+        "name": "key",
+        "description": "API key for urlscan.io",
+        "type": "string",
+        "multi": false,
+        "required": true
+    }, {
+        "name": "public",
+        "description": "Input text 'off' or 'on' for making the scans private or public",
+        "type": "string",
+        "multi": false,
+        "required": true
+    }],
     "command": "UrlscanIO/urlscan.py"
 }
