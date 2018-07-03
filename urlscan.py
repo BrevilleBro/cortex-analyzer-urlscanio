@@ -121,7 +121,7 @@ class UrlscanAnalyzer(Analyzer):
                 "urls" : response.json()['lists']['urls'],
                 "linkDomains" : response.json()['lists']['linkDomains'],
                 "certificates" : response.json()['lists']['certificates'],
-                "ans": response.json()['lists']['asns'],
+                "asns": response.json()['lists']['asns'],
                 "page" : response.json()['page'],
                 "task" : response.json()['task'],
                 "malicious" : response.json()['stats']['malicious'],
